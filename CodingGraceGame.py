@@ -559,6 +559,56 @@ def pink_floral_hall_room(player_info_arg): #CONTRACT ITEM 1
     show_player_info(player_info_arg) #CONTRACT ITEM 6
     return player_info_arg #CONTRACT ITEM 7
 
+# CONTRACT item 1: accepts exactly one parameter named player_info_arg
+def yellow_lemon_farm_room(player_info_arg):
+    """Yellow Lemon Farm Room: a lemon farm with hidden threat."""
+
+    # Enter the room
+    print("\nYou have entered the Yellow Lemon Farm Room.")
+
+    # CONTRACT item 2: set location to the room's display name
+    player_info_arg["location"] = "Yellow Room"
+
+    # CONTRACT item 3: modify health and keep value between 0 and 200
+    player_info_arg["health"] = min(200, player_info_arg["health"] + 5)
+
+    # CONTRACT item 4: optionally append one item to inventory with duplicate check
+    item = "Seed Coin"
+    if item not in player_info_arg["inventory"]:
+        player_info_arg["inventory"].append(item)
+        print(f"You found a {item}!")
+
+    # CONTRACT item 5: append the room's display name to choices
+    player_info_arg["choices"].append("Yellow Room")
+
+    # CONTRACT item 6: call show_player_info(player_info_arg) exactly once after all state updates
+    show_player_info(player_info_arg)
+
+    print("You walk into a lemon farm.")
+    print("Yellow lemons hang from the trees.")
+    print("You notice a ladder and some water nearby.")
+    print("Choose ladder or water. You can also type flee.")
+
+    action = input("Enter a choice: > ").strip().lower()
+
+    if action == "ladder":
+      print("You climb the ladder and safely get through the lemon farm.")
+      return player_info_arg   # CONTRACT item 7: return player_info_arg
+
+    elif action == "water":
+      you_died("A crocodile jumps out of the water and eats you.") # CONTRACT item 8
+
+    elif action == "flee":
+      print("You leave the lemon farm.")
+      return "flee"   # CONTRACT item 7: return "flee"
+
+    else:
+      print("That is not a valid choice.")
+      return "flee"   # CONTRACT item 7: return "flee"
+
+# CONTRACT item 9: this room does not modify start_new_adventure(), main(),
+# any existing room function, or any global variables
+
 # ===========================================================================
 # CONTROL FUNCTIONS
 # ===========================================================================

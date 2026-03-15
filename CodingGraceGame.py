@@ -440,6 +440,50 @@ def green_magic_room(player_info_arg):
         print("The magician waves his hand and you are whisked away...\n")
         return "flee"
 
+def purple_shadow_realm_room(player_info_arg): # CONTRACT ITEM 1
+    """The Purple Room: Roll a dice to determine your fate."""
+
+    # ASCII art
+    print_ghost()
+    print("\nYou have entered the Purple Room.")
+
+    # Update player state (CONTRACT ITEM 2)
+    player_info_arg["location"] = "Purple Room"
+
+    player_info_arg["choices"].append("Purple Room") #CONTRACT ITEM 5
+
+    # Room narrative and interaction
+    print("A ghost appears in front of you holding two die.")
+    print("'Roll higher than me and gain health points. Roll lower and lose health points.'")
+
+    player_roll = random.randint(1,6)
+    ghost_roll = random.randint(1,6)
+
+    print(f"You rolled: {player_roll}")
+    print(f"The ghost rolled: {ghost_roll}")
+
+    if player_roll > ghost_roll:
+        damage_or_healing = player_roll
+        player_info_arg["health"] += damage_or_healing #CONTRACT ITEM 3
+        player_info_arg["health"] = min(200, player_info_arg["health"])
+        print(f"You win! You gain {damage_or_healing} HP.")
+
+    elif player_roll < ghost_roll:
+        damage_or_healing = ghost_roll
+        player_info_arg["health"] -= damage_or_healing
+        player_info_arg["health"] = min(1, player_info_arg["health"])
+        print(f"You lose! You lose {damage_or_healing} HP.")
+    
+    else:
+        damage_or_healing = ghost_roll
+        player_info_arg["health"] += damage_or_healing
+        player_info_arg["health"] = min(200, player_info_arg["health"])
+        print(f"It's a tie! The ghost is a friendly one and decides to heal you. You gain {damage_or_healing} HP.")
+
+    # Display current state
+    show_player_info(player_info_arg) #CONTRACT ITEM 6
+    return player_info_arg #CONTRACT ITEM 7
+
 
 # ===========================================================================
 # CONTROL FUNCTIONS
@@ -710,7 +754,27 @@ def print_new_dungeon():
     print(r"/   -_- _ -                  _- _---                             -_-  -_-         \ ")
     print()
 
-
+def print_ghost():
+    print()
+    print(r"                .-----. ")
+    print(r"              .' -   - '. ")
+    print(r"             /  .-. .-.  \ ")
+    print(r"             |  | | | |  | ")
+    print(r"              \ \o/ \o/ / ")
+    print(r"             _/    ^    \_ ")
+    print(r"            | \  '---'  / | ")
+    print(r"            / /`--. .--`\ \ ")
+    print(r"           / /'---` `---'\ \ ")
+    print(r"           '.__.       .__.' ")
+    print(r"               `|     |` ")
+    print(r"                |     \ ")
+    print(r"                \      '--. ")
+    print(r"                 '.        `\ ")
+    print(r"                   `'---.   | ")
+    print(r"                      ,__) / ")
+    print(r"                       `..' ")
+    print()
+    
 # ===========================================================================
 # ENTRY POINT
 # ===========================================================================

@@ -484,6 +484,80 @@ def purple_shadow_realm_room(player_info_arg): # CONTRACT ITEM 1
     show_player_info(player_info_arg) #CONTRACT ITEM 6
     return player_info_arg #CONTRACT ITEM 7
 
+def pink_floral_hall_room(player_info_arg): #CONTRACT ITEM 1
+    """The Floral Hall: A Bush Maze filled with water beneath, with a boat to navigate through the corridor."""
+
+    # Call an ASCII art function here
+    print("\nYou have entered the Pink Floral Room.")
+    print_flowers()
+
+    # --- Update player state 
+    player_info_arg["location"] = "Pink Room" #CONTRACT ITEM 2
+
+    player_info_arg["choices"].append("Pink Room") #CONTRACT ITEM 5
+
+    # --- Room narrative and interaction ---
+    print("\n--- The Pink Floral Hall ---")
+    print("The air is sweet but cold. Beneath a canopy of glowing pink tulips,")
+    print("a shallow canal winds through a dense hedge maze.")
+
+    # The Maze
+    print("\n--- The Maze or The Alleyway ---")
+    while True:
+      print("\nChoices: [Boat] through the water maze | Enter the [Alleyway]")
+      print("Enter a choice: ", end="")
+      action = input(" > ").lower()
+
+      if "boat" in action:
+            print("You navigated the boat through the floral hedges of the maze walls.")
+            if "Floral Key" not in player_info_arg["inventory"]:
+                print("You spot something sparkly underwater... You stick your hand in and found the Floral Key!")
+                player_info_arg["inventory"].append("Floral Key") #CONTRACT ITEM 4
+                print("The key is now in your inventory!")
+            if player_info_arg["health"] < 100: #CONTRACT ITEM 3
+              player_info_arg["health"] += 10
+              print("The floral scent surrounds you. You gain 10 HP!")
+
+            print("You reach a massive iron gate at the end of the bush water maze.")
+
+            # Choices for the gate
+            gate_choice = input("Should you try to open the gate? (yes/no) > ").lower()
+            if "y" in gate_choice and "Floral Key" in player_info_arg["inventory"]:
+                print("The Floral Key turns smoothly. The gate creeks open to another room!")
+                return player_info_arg #CONTRACT ITEM 7 
+            else:
+                print("The gate is locked. You should go back.")
+                choice = input("Type [flee] to go back > ").lower()
+                if "flee" in choice:
+                    continue
+                if "flee" not in choice:
+                    print("Invalid choice. Please type 'flee'.")
+                    continue
+                return "flee" #CONTRACT ITEM 7
+
+      elif "alleyway" in action:
+            print("The alleyway is pitch black. You feel eyes watching you...")
+            # Health penalty is given
+            player_info_arg["health"] -= 30 #CONTRACT ITEM 3
+            print("A shadowy figure strikes you out of nowhere! You lost 30 HP.")
+            if player_info_arg["health"] <= 0: 
+                return you_died("The shadows claimed you.") # CONTRACT ITEM 8
+            else:
+                show_player_info(player_info_arg)
+                print("You should continue your journey forward.")
+                return player_info_arg #CONTRACT ITEM 7
+
+      else:
+        invalid_choice = True
+        if invalid_choice == True: 
+          print("Invalid choice. Please choose 'boat' or 'alleyway'.")
+          invalid_choice = input("Do you want to try again? (yes/no) > ").lower()
+          if "y" in invalid_choice:
+            continue
+
+    # --- Display current state
+    show_player_info(player_info_arg) #CONTRACT ITEM 6
+    return player_info_arg #CONTRACT ITEM 7
 
 # ===========================================================================
 # CONTROL FUNCTIONS
@@ -774,7 +848,19 @@ def print_ghost():
     print(r"                      ,__) / ")
     print(r"                       `..' ")
     print()
-    
+
+def print_flowers():
+    print()
+    print(r"            .--. ")
+    print(r"          .'_\/_'. ")
+    print(r"          '. /\ .' ")
+    print(r"            '||' ")
+    print(r"             || /\  ")
+    print(r"          /\ ||//\) ")
+    print(r"         (/\\||/  ")
+    print(r"      ______\||/_______")
+    print()
+
 # ===========================================================================
 # ENTRY POINT
 # ===========================================================================

@@ -659,56 +659,6 @@ def white_crystal_boba_room(player_info_arg):
 # CONTRACT item 9: this room does not modify start_new_adventure(), main(),
 # any existing room function, or any global variables
 
-# CONTRACT item 1: accepts exactly one parameter named player_info_arg
-def white_crystal_boba_room(player_info_arg):
-    """White Room: a bright room with crystal boba."""
-
-    # Enter the room
-    print("\nYou have entered the White Room.")
-
-    # CONTRACT item 2: set location to the room's display name
-    player_info_arg["location"] = "White Room"
-
-    # CONTRACT item 3: modify health and keep value between 0 and 200
-    player_info_arg["health"] = min(200, player_info_arg["health"] + 5)
-
-    # CONTRACT item 4: optionally append one item to inventory with duplicate check
-    item = "Crystal Boba"
-    if item not in player_info_arg["inventory"]:
-        player_info_arg["inventory"].append(item)
-        print(f"You found a {item}!")
-
-    # CONTRACT item 5: append the room's display name to choices
-    player_info_arg["choices"].append("White Room")
-
-    # CONTRACT item 6: call show_player_info(player_info_arg) exactly once after all state updates
-    show_player_info(player_info_arg)
-
-    print("You see a cup of crystal boba on a table.")
-    print("Choose drink or leave. You can also type flee.")
-
-    action = input("Enter a choice: ").strip().lower()
-
-    if action == "drink":
-        print("The crystal boba tastes sweet.")
-        return player_info_arg   # CONTRACT item 7
-
-    elif action == "leave":
-        print("You leave the White Room.")
-        return player_info_arg   # CONTRACT item 7
-
-    elif action == "flee":
-        print("You run away from the room.")
-        return "flee"   # CONTRACT item 7
-
-    else:
-        print("That is not a valid choice.")
-        return "flee"   # CONTRACT item 7
-
-
-# CONTRACT item 9: this room does not modify start_new_adventure(), main(),
-# any existing room function, or any global variables
-
 # ===========================================================================
 # CONTROL FUNCTIONS
 # ===========================================================================
